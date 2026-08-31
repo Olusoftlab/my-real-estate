@@ -1,27 +1,33 @@
-import { config } from "dotenv";
+import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-config()
+import userRouter from "./routes/userRouter.js";
 
-mongoose.connect(process.env.DATABASE_url).then(()=>{
-
-    console.log("Database successfully connected");
-}).catch((err)=>{
-
-       console.error(err);
-})
+dotenv.config();
 
 
 const app=express();
 
-app.get("/", (req,res)=>{
+app.use("/api/user", userRouter);
 
-     res.send("hello");
+
+
+
+
+mongoose.connect(process.env.DATABASE_URL).then(()=>{
+
+   console.log("Succcessfully connected database");
+
+   app.listen(5000, ()=>{
+
+       console.log("Server running on port 5000");
+   })
+
+}).catch((err)=>{
+
+      console.error(err);
 })
 
-app.listen(6000, ()=>{
 
-     
 
-     console.log("server running on port 6000");
-})
+
