@@ -1,4 +1,15 @@
+import { config } from "dotenv";
 import express from "express";
+import mongoose from "mongoose";
+config()
+
+mongoose.connect(process.env.DATABASE_url).then(()=>{
+
+    console.log("Database successfully connected");
+}).catch((err)=>{
+
+       console.error(err);
+})
 
 
 const app=express();
