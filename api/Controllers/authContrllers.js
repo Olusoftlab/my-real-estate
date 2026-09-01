@@ -1,8 +1,8 @@
 import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
+import { errorHandler } from "../utils/errorHandler.js";
 
-
-export const signUpController=async(req,res)=>{
+export const signUpController=async(req,res,next)=>{
 
     const {username, email, password}=req.body;
     
@@ -19,8 +19,9 @@ export const signUpController=async(req,res)=>{
 
 
      } catch (error) {
-        console.log(error.message);
-        res.status(500).json({message:error.message});
+         
+          console.log(error);
+          res.status(500).json({mssage:"internal server error"});
      }
  
 
