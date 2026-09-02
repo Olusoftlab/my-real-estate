@@ -50,11 +50,11 @@ export default function SignUp() {
                 
              setError(result.message)
              setLoading(false);
+             setTimeout(()=> setError(null), 5000)
              return
           }
           
           setLoading(false);
-          setTimeout(()=> setError(null), 5000); 
           navigate("/sign-in");
        }catch(err){
           
