@@ -13,12 +13,17 @@ app.use(express.json());
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use((err,req,res,next)=>{
+   
 
-   const statusCode=err.statusCode || 500;
-   const message=err.message || "internal server error";
+    if (err){
+          const message=err.message || "internal server error"
+          const statusCode=err.statusCode || 500
+          const success=false
+         
+         return res.status(statusCode).json({message, statusCode, success  });
 
-   return res.status(statusCode).json({error:message});
-
+    }
+ 
 });
 
 

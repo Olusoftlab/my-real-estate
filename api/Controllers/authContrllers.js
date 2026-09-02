@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
-import { errorHandler } from "../utils/errorHandler.js";
 
 export const signUpController=async(req,res,next)=>{
 
@@ -12,7 +11,7 @@ export const signUpController=async(req,res,next)=>{
         const user=new User({username,email,password:hashPass});
         const userInfo=await user.save();
        
-        res.status(200).json({message:"user succssfully created",
+        return  res.status(200).json({message:"user succssfully created",
 
             data:userInfo
         })
@@ -20,8 +19,7 @@ export const signUpController=async(req,res,next)=>{
 
      } catch (error) {
          
-          console.log(error);
-          res.status(500).json({mssage:"internal server error"});
+          next(error);
      }
  
 
