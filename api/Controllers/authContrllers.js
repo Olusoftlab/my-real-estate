@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
+import { errorHandler } from "../utils/errorHandler.js";
 
 export const signUpController=async(req,res,next)=>{
 
@@ -45,7 +46,7 @@ export const signInController=async(req,res,next)=>{
 
          if(!validPass){
 
-             return next(errorHandler(401, "user unauthorised"));
+             return next(errorHandler(401, "user unauthorised: invalid credentials"));
          }
 
        const token=jwt.sign({id:validUser._id},process.env.JWT_SECRET, {expiresIn:"2d"});

@@ -1,9 +1,8 @@
-import React from 'react'
 
 export default function Home() {
   return (
     <div>
-         Home
+         <h1>Welcome to the real estate home page</h1>
     </div>
   )
 }
