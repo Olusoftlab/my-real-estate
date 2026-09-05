@@ -13,4 +13,10 @@ export default defineConfig({
       }
   },
   plugins: [react(), tailwindcss() ],
+
+  optimizeDeps:{
+
+    include:["redux-persist/lib/storage"]
+  }
+
 })
