@@ -1,19 +1,27 @@
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
+import { createRouteHandler } from "uploadthing/express";
 import authRouter from "./routes/authRouter.js";
 import userRouter from "./routes/userRouter.js";
+import { uploadRouter } from "./routes/uploadRoute.js";
 
 
 dotenv.config();
 
 
 const app=express();
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+
+app.use("/api/uploadthing", createRouteHandler({router:uploadRouter}))
+
+
 app.use((err,req,res,next)=>{
    
 

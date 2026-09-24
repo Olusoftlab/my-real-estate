@@ -9,3 +9,15 @@ body{
 .apply{
     background-color:white!;
 }
+
+.dark-blue{
+
+    background-color:rgb(18, 18, 35);
+}
+
+.image-style{
+
+     width:300px;
+     height:300px;
+
+}
