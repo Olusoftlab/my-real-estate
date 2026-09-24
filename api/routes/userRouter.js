@@ -1,8 +1,11 @@
 import express from "express";
-import { testApi } from "../Controllers/userController.js";
+import { testApi, updateUserController } from "../Controllers/userController.js";
+import { verifyUser } from "../utils/verifyUser.js";
 
 const router=express.Router();
 
 router.get("/test",testApi);
+router.put("/update/:id",verifyUser, updateUserController)
+
 
 export default router;

@@ -53,7 +53,11 @@ export const signInController=async(req,res,next)=>{
        const {password:pass, ...rest}=validUser._doc;
 
 
-       res.cookie("access_token", token, {httpOnly:true, maxAge:2 * 24 * 60 * 60 * 1000}).status(200).json({message:"user signed in successfully",data:rest});   
+       res.cookie("access_token", token, {httpOnly:true, maxAge:2 * 24 * 60 * 60 * 1000}).status(200).json({message:"user signed in successfully",data:rest,
+       
+         userToken:token
+
+       });   
          
 
     }catch(error){
