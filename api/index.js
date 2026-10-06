@@ -5,15 +5,15 @@ import express from "express";
 import mongoose from "mongoose";
 import { createRouteHandler } from "uploadthing/express";
 import authRouter from "./routes/authRouter.js";
-import userRouter from "./routes/userRouter.js";
 import { uploadRouter } from "./routes/uploadRoute.js";
+import userRouter from "./routes/userRouter.js";
 
 
 dotenv.config();
 
 
 const app=express();
-app.use(cors());
+app.use(cors({origin:"http://localhost:5173", credentials:true    }));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/user", userRouter);
@@ -26,7 +26,7 @@ app.use((err,req,res,next)=>{
    
 
     if (err){
-          const message=err.message || "internal server error"
+          const message=err.message
           const statusCode=err.statusCode || 500
           const success=false
          

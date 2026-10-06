@@ -11,34 +11,38 @@ export const testApi=(req,res)=>{
 export const updateUserController=async (req,res,next)=>{
    
 
-    if (req.user.id != req.params.id)return next(errorHandler(401,"unauthorised"))
+    if (req.user.id !== req.params.id)return next(errorHandler(401,"cannot update another person info"))
  
     try {
+ 
+        const updates={}
+        
+        const assignAll=req.body.password || req.body.email || req.body.avatar || req.body.username
 
-       if (req.body.password){
+       if (assignAll){
            
-           req.body.password=bcrypt.hashSync(req.body.password, 10)
+           updates.password=bcrypt.hashSync(req.body.password, 10)
+           updates.email=req.body.email
+           updates.username=req.body.username
+           updates.avatar=req.body.avatar  
        }
  
+   
+
        const updateUser=await User.findByIdAndUpdate(req.user.id, {
 
-             $set:{
-
-                  username:req.body.username,
-                  email:req.body.email,
-                  password:req.body.password,
-                  avatar:req.body.avatar
-             }
+             $set:updates
 
        },{new:true}) 
 
+
        const {password, ...rest}=updateUser._doc
 
-        res.status(200).json({
+        return res.status(200).json({
  
             success:true,
             message:"updated successfully",
-            data:rest
+            rest
         })
 
     } catch (error) {
