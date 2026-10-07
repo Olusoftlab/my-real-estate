@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
+import DeleteInfo from "./Components/DeleteInfo"
 import Header from "./Components/Header"
 import PrivateRoute from "./Components/PrivateRoute"
 import ProtectedHome from "./Components/ProtectedHome"
@@ -27,7 +28,7 @@ export default function App() {
                        <Route path="/profile" element={<Profile/>} />    
                          
                   </Route>
-                       
+                  <Route  path="/deleteInfo"  element={<DeleteInfo/>} />     
             </Routes>      
       
       </BrowserRouter>

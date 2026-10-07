@@ -52,3 +52,23 @@ export const updateUserController=async (req,res,next)=>{
 
 
 }
+
+
+export const deleteUserController=async (req,res,next)=>{
+
+    if (req.user.id !== req.params.id)return next(errorHandler(401, "not authorised to delete user"))
+
+     try {
+
+         await User.findByIdAndDelete(req.params.id)
+
+          res.clearCookie("access_token");               
+
+          return res.status(200).json({message:"Successfully deleted user account"});
+
+        
+     } catch (error) {
+        next(error)
+     } 
+
+}
