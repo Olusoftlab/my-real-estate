@@ -117,3 +117,24 @@ export const googleController=async(req,res,next)=>{
      }
     
 }
+
+
+
+export const signOutController=(req,res,next)=>{
+
+     if (req.user.id !== req.params.id)return next(errorHandler(401, "not authorised to sign out user"))
+
+     try{
+       
+          res.clearCookie("access_token");
+          res.status(200).json({message:"successfully signout user"})
+
+     }catch(error){
+
+         next(error)
+
+     }   
+
+
+
+}

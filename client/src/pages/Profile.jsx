@@ -1,7 +1,13 @@
 import { useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { deleteUserFailure, deleteUserStart, deleteUserSuccess, updateUserFailure, updateUserStart, updateUserSuccess } from "../redux/user/userSlice"
+import {
+  deleteUserFailure, deleteUserStart, deleteUserSuccess,
+  signOutUserFailure,
+  signOutUserStart,
+  signOutUserSuccess,
+  updateUserFailure, updateUserStart, updateUserSuccess
+} from "../redux/user/userSlice"
 import { useUploadThing } from "../uploading"
 
 export default function Profile() {
@@ -16,6 +22,9 @@ export default function Profile() {
   const [showDeleteInfo, setShowDeleteInfo]=useState(false)
   const navigate=useNavigate()
 
+
+
+console.log(currentUser)
 
 
   const {startUpload, isUploading}=useUploadThing("imageUploader",{
@@ -130,6 +139,35 @@ export default function Profile() {
      }
  
 
+   const handleSignOut=async()=>{
+       
+        dispatch(signOutUserStart());
+
+        try {
+           
+            const res=await fetch(`/api/auth/signout/${currentUser.rest._id}`  )
+            
+            const data=await res.json();
+
+            if (data.success === false){
+
+                 dispatch(signOutUserFailure(data.message));
+                 return;
+            }
+
+
+            dispatch(signOutUserSuccess(data));
+
+        } catch (error) {
+            dispatch(signOutUserFailure(error.message))
+        }
+
+
+   }
+
+
+
+
 
 
    const clearMessage=()=>{
@@ -170,7 +208,7 @@ export default function Profile() {
           </form>  
           <div className=" flex justify-between max-w-lg mx-auto px-4">
              <span  onClick={handleDelete}   className="text-red-700 text-sm hover:underline cursor-pointer"  >Delete account</span>
-             <span className="text-red-700 text-sm hover:underline cursor-pointer"  >Sign out</span>
+             <span  onClick={handleSignOut}   className="text-red-700 text-sm hover:underline cursor-pointer"  >Sign out</span>
           </div>    
           <p  className="text-green-400 text-center mt-3 hover:underline cursor-pointer"  >Show listings</p>
     </div>
