@@ -8,4 +8,5 @@ router.get("/test",testApi);
 router.post("/update/:id",verifyUser, updateUserController)
 router.delete("/delete/:id", verifyUser, deleteUserController)
 
+
 export default router;

@@ -5,9 +5,9 @@ import express from "express";
 import mongoose from "mongoose";
 import { createRouteHandler } from "uploadthing/express";
 import authRouter from "./routes/authRouter.js";
+import listingRouter from "./routes/listingrouter.js";
 import { uploadRouter } from "./routes/uploadRoute.js";
 import userRouter from "./routes/userRouter.js";
-
 
 dotenv.config();
 
@@ -18,6 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/listing", listingRouter)
 
 app.use("/api/uploadthing", createRouteHandler({router:uploadRouter}))
 
