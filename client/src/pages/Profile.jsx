@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import {
   deleteUserFailure, deleteUserStart, deleteUserSuccess,
   signOutUserFailure,
@@ -204,8 +204,10 @@ console.log(currentUser)
               <input   defaultValue={currentUser.rest?.email}    onChange={handleChange}  id="email"  type="email"   className="border bg-white  outline-none  p-2 rounded-lg"  />     
               <input  type="password" onChange={handleChange} id="password"   placeholder="password" className="border bg-white  outline-none  p-1 h-10 rounded-lg"   />
               <button     className=" dark-blue p-2 cursor-pointer uppercase hover:opacity-90 rounded-lg text-white"  >{loading? "updating":"update"  }</button>
-              <button  className="bg-green-600 p-2 text-white  rounded-lg  hover:opacity-90 uppercase"  >Create listings</button>
-          </form>  
+              <Link  to={"/create-listing"}   className="bg-green-600 p-2 text-white  text-center  rounded-lg  hover:opacity-90 uppercase"     >
+                  create listing
+              </Link>
+          </form>   
           <div className=" flex justify-between max-w-lg mx-auto px-4">
              <span  onClick={handleDelete}   className="text-red-700 text-sm hover:underline cursor-pointer"  >Delete account</span>
              <span  onClick={handleSignOut}   className="text-red-700 text-sm hover:underline cursor-pointer"  >Sign out</span>

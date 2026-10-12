@@ -1,13 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import DeleteInfo from "./Components/DeleteInfo"
 import Header from "./Components/Header"
+import ListPrivateRoute from "./Components/ListPrivateRoute"
 import PrivateRoute from "./Components/PrivateRoute"
 import ProtectedHome from "./Components/ProtectedHome"
 import About from "./pages/About"
+import CreateListing from "./pages/CreateListing"
 import Home from "./pages/Home"
 import Profile from "./pages/Profile"
 import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
+
+
 
 export default function App() {
   return (
@@ -22,13 +25,15 @@ export default function App() {
                   <Route path="/about" element={<About/>} />      
                   <Route path="/sign-in" element={<SignIn/>} />      
                   <Route path="/sign-up" element={<SignUp/>} />
-                  <Route  path="/profile"   element={<PrivateRoute/>}>
-                      
-
+                  <Route  path="/profile"   element={<PrivateRoute/>}>              
                        <Route path="/profile" element={<Profile/>} />    
-                         
+               
                   </Route>
-                  <Route  path="/deleteInfo"  element={<DeleteInfo/>} />     
+                  <Route path="/create-listing"  element={<ListPrivateRoute/>} >
+                      
+                         <Route path="/create-listing" element={<CreateListing/>}  />
+
+                  </Route>
             </Routes>      
       
       </BrowserRouter>
