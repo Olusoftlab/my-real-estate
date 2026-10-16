@@ -24,9 +24,6 @@ export default function Profile() {
 
 
 
-console.log(currentUser)
-
-
   const {startUpload, isUploading}=useUploadThing("imageUploader",{
 
     onUploadProgress:(p)=>setProgress(p),
