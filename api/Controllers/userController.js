@@ -1,6 +1,8 @@
 import bcrypt from "bcryptjs";
+import ListingModel from "../models/listingModel.js";
 import User from "../models/user.model.js";
 import { errorHandler } from "../utils/errorHandler.js";
+
 
 export const testApi=(req,res)=>{
 
@@ -70,5 +72,24 @@ export const deleteUserController=async (req,res,next)=>{
      } catch (error) {
         next(error)
      } 
+
+}
+
+
+export const userListingController=async (req,res,next)=>{
+   
+     if (req.user.id !== req.params.id )return next(errorHandler(401, "unauthorised: cannot access other user listings"))
+
+    try{
+
+        const getListings=await ListingModel.find({userRef:req.params.id})
+       
+         return res.status(200).json(getListings);
+
+    }catch(error){
+
+       next(error)
+
+    }
 
 }
