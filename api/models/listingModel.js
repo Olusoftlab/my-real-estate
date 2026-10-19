@@ -26,7 +26,7 @@ const listingSchema=new mongoose.Schema({
 ,
     discountPrice:{
        type:Number,
-       required:true
+    
     }
 
 ,
@@ -46,37 +46,35 @@ const listingSchema=new mongoose.Schema({
 
    furnished:{
        type:Boolean,
-       required:true
+    
    }
 ,
    
    parking:{
       
-        type:Boolean,
-        required:true
+        type:Boolean
 
    }
  ,
 
    sale:{
       type:Boolean,
-      required:true
+    
    }
 ,
   rent:{
       type:Boolean,
-      required:true
+      
   } 
  ,  
    offer:{
        type:Boolean,
-       required:true
+       
    }
  ,
 
    imageUrls:{
       type:Array,
-      required:true
    } 
 ,
 

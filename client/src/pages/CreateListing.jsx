@@ -9,10 +9,10 @@ function CreateListing() {
       const [files, setFiles]=useState([])
       const [uploadImage, setUploadImage]=useState(null);
       const [errorUpload,setErrorUpload]=useState(false)
-      const [formData, setFormData]=useState({imageUrls:[],  userRef: currentUser.rest.username })
+      const [formData, setFormData]=useState({imageUrls:[], bathrooms:1, bedrooms:1, regularPrice:50, discountPrice:50,  userRef: currentUser.rest._id })
       const [fileNumberError, setFileNumberError]=useState(false)
       const [loading,setLoading]=useState(false)
-      const [listError,setListError]=useState(null)     
+      const [listError,setListError]=useState("")     
       const [listPayload, setListPayload]=useState(null)
       const navigate=useNavigate()
 
@@ -99,14 +99,10 @@ function CreateListing() {
 
     const handleCheck=(e)=>{
 
-       setFormData({...formData, [e.target.id]:e.target.checked? true:false  })
+       setFormData({...formData, [e.target.id]:e.target.checked })
     }
 
-    const handleUncheckNum=(e)=>{
-
-         setFormData({...formData, [e.target.id]:parseInt(e.target.value)})  
-      
-    }
+  
 
 
  
@@ -115,12 +111,20 @@ function CreateListing() {
     const handleCreateList=async (e)=>{
 
        e.preventDefault();
+       
      
-
 
         try{
            
           setLoading(true)
+          if (formData.imageUrls.length <= 0){
+
+                setListError("At least one image must be uploaded")
+                return;
+          }
+          
+          if (+formData.regularPrice < +formData.discountPrice)return setListError("Discoubt price must be less than regilar price")
+
            const res=await fetch("/api/listing/create", 
 
                  {
@@ -140,10 +144,11 @@ function CreateListing() {
             if (data.success === false){
 
                  setListError(data.message)
+                 console.log(listError);
                  return;
             }
 
-             console.log(formData);
+             
             setListPayload(data);
             navigate(`/listing//${data._id}`)  
         }catch(error){
@@ -208,17 +213,17 @@ function CreateListing() {
                      
                      <div className="flex gap-5 flex-wrap ">
                               <div className="flex gap-2 items-center">
-                                  <input  onChange={handleUncheckNum}   type="number" min="1" max="10" required id="bathrooms"  className="border rounded-lg border-gray-300  p-1" />
+                                  <input  onChange={handleUncheck} value={formData.bathrooms}  type="number" min="1" max="10" required id="bathrooms"  className="border rounded-lg border-gray-300  p-1" />
                                   <span>Baths</span>
                               </div> 
 
                               <div className="flex gap-2 items-center">
-                                  <input  onChange={handleUncheckNum}    type="number" id="bedrooms"  required   min="1" max="10"  className="border rounded-lg p-1 border-gray-300 " />
+                                  <input  onChange={handleUncheck}  value={formData.bedrooms}  type="number" id="bedrooms"  required   min="1" max="10"  className="border rounded-lg p-1 border-gray-300 " />
                                   <span>Beds</span>
                               </div> 
 
                               <div className="flex gap-2 items-center">
-                                  <input  onChange={handleUncheckNum}    type="number" id="regularPrice"  required   min="1" max="10"  className=" rounded-lg border p-1 border-gray-300 " />
+                                  <input  onChange={handleUncheck}  value={formData.regularPrice}  type="number" id="regularPrice"  required   min="1" max="5000"  className=" rounded-lg border p-1 border-gray-300 " />
                                   <div className="flex flex-col items-center ">
                                       <p>Regular price</p>
                                       <span className="text-xs" >$/month</span>
@@ -226,14 +231,19 @@ function CreateListing() {
                               </div> 
                               
 
+                              {formData.offer && 
+                                     
+                                     
+                                   <div className="flex gap-2 items-center">
+                                        <input onChange={handleUncheck} value={formData.discountPrice}  type="number" id="discountPrice"  required   min="1" max="500"  className=" rounded-lg border p-1 border-gray-300 " />
+                                        <div className="flex flex-col items-center ">
+                                             <p>Discounted price</p>
+                                             <span className="text-xs" >$/month</span>
+                                        </div>
+                                   </div>           
                               
-                              <div className="flex gap-2 items-center">
-                                  <input onChange={handleUncheckNum}   type="number" id="discountPrice"  required   min="1" max="10"  className=" rounded-lg border p-1 border-gray-300 " />
-                                  <div className="flex flex-col items-center ">
-                                      <p>Discounted price</p>
-                                      <span className="text-xs" >$/month</span>
-                                  </div>
-                              </div>           
+                              }
+                         
                      </div>
 
                 </div> 
@@ -258,8 +268,9 @@ function CreateListing() {
                                 <img  src={url}   className="w-20 h-20 object-cover rounded-lg"  alt="listing-image"    /> 
                                 <div>
                                     <button id={`${formData.imageUrls.indexOf(url)}`}     onClick={handleDeleteImage}   className="border text-sm cursor-pointer hover:bg-red-700 hover:text-white  hover:opacity-90 rounded-lg uppercase text-red-700 p-1 px-2"  >delete</button> 
+                                 
                                 </div>
-                           </div>
+                           </div>  
 
                        ))
 
@@ -270,6 +281,7 @@ function CreateListing() {
                          {loading? "Creating Listing...": "Create List"}
                     
                     </button>
+                    {listError && <p className=" text-red-700 text-sm "   >{listError}</p>}
                 </div>
                
               
