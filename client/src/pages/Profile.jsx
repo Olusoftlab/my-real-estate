@@ -22,6 +22,11 @@ export default function Profile() {
   const [showDeleteInfo, setShowDeleteInfo]=useState(false)
   const navigate=useNavigate()
 
+  //userlisting states
+
+  const [userListings, setUserListings]=useState([])
+  const [userListError, setUserListError]=useState(false)
+
 
 
   const {startUpload, isUploading}=useUploadThing("imageUploader",{
@@ -136,6 +141,13 @@ export default function Profile() {
      }
  
 
+
+
+
+
+
+
+
    const handleSignOut=async()=>{
        
         dispatch(signOutUserStart());
@@ -164,6 +176,36 @@ export default function Profile() {
 
 
 
+   const handleShowListings=async (e)=>{
+  
+        try{
+           
+           setUserListError(false)
+           const res=await fetch(`/api/user/userlisting/${currentUser.rest._id}`)
+
+           const data=await res.json() 
+          
+              if (data.success === false){
+              
+                  setUserListError(true)
+                  return;
+              }
+
+            setUserListings(data)
+          
+
+        }catch(error){
+             
+             setUserListError(error.message)
+             console.log(error)
+          
+        }
+       
+
+   }
+ 
+
+
 
 
 
@@ -178,7 +220,19 @@ export default function Profile() {
 
   clearMessage();
 
+  
+        const handleShowListDelete=async(e)=>{
 
+
+
+        }
+
+         const handleShowlistEdit=async(e)=>{
+
+
+
+         }
+     
   
 
 
@@ -205,11 +259,51 @@ export default function Profile() {
                   create listing
               </Link>
           </form>   
-          <div className=" flex justify-between max-w-lg mx-auto px-4">
+          <div className=" mb-3  flex justify-between max-w-lg mx-auto px-4">
              <span  onClick={handleDelete}   className="text-red-700 text-sm hover:underline cursor-pointer"  >Delete account</span>
              <span  onClick={handleSignOut}   className="text-red-700 text-sm hover:underline cursor-pointer"  >Sign out</span>
           </div>    
-          <p  className="text-green-400 text-center mt-3 hover:underline cursor-pointer"  >Show listings</p>
+
+          <button    onClick={handleShowListings}  className="w-full text-green-700"  >Show listings</button>
+                       
+                     {userListings?.length > 0  &&  
+                    
+                          <div  className="flex flex-col gap-6 mt-4 max-w-lg mx-auto" >   
+                                  
+                                 <h1   className="text-2xl font-bold text-center" >Your Listings</h1>
+
+                                  { userListings.map((listing)=>(
+
+                                      <div  key={listing._id} className=" p-2 border border-gray-300 flex justify-between rounded-lg items-center" >
+                                          
+                                            <div className="flex gap-2 items-center ">
+                                                <Link  to={`/listing/${listing._id}`}>
+                                                    <img  src={listing.imageUrls[0]}  className="w-20 h-20 object-cover rounded-lg"   />
+                                                </Link>
+                                                <Link className="flex-1 truncate" to={`/listing/${listing._id}`} >
+                                                    <p>{listing.name}</p>
+                                                </Link> 
+                                            </div>
+            
+
+                                            <div className="flex flex-col gap-1 items-center">
+                                                  
+                                                  <button  onClick={handleShowListDelete}   className="text-sm  cursor-pointer   uppercase text-red-700"  >Delete</button>
+                                                  <button  onClick={handleShowlistEdit}    className="hover:underline cursor-pointer  uppercase"  >Edit</button>
+                                            </div>
+                                      </div>
+
+
+                                    ) ) 
+                                  
+                                }  
+                            
+                          </div>
+                   
+                     }
+         
+          {userListError && <p   className="text-red-700 mt-4 text-sm" >Error showing listing</p>} 
+
     </div>
   )
 }

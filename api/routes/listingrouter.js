@@ -1,10 +1,12 @@
 import express from "express";
-import { createListingController } from "../Controllers/createListingController.js";
+import { createListingController } from "../Controllers/listingController.js";
 import { verifyUser } from "../utils/verifyUser.js";
 
 const router=express.Router();
 
 
 router.post("/create",verifyUser,createListingController);
+
+
 
 export default router;

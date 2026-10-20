@@ -1,6 +1,5 @@
 import ListingModel from "../models/listingModel.js";
 
-
 export const createListingController=async(req, res, next)=>{
  
     
@@ -17,3 +16,5 @@ export const createListingController=async(req, res, next)=>{
       }
   
 }
+
+
