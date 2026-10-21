@@ -2,11 +2,11 @@ import { useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import {
-  deleteUserFailure, deleteUserStart, deleteUserSuccess,
-  signOutUserFailure,
-  signOutUserStart,
-  signOutUserSuccess,
-  updateUserFailure, updateUserStart, updateUserSuccess
+    deleteUserFailure, deleteUserStart, deleteUserSuccess,
+    signOutUserFailure,
+    signOutUserStart,
+    signOutUserSuccess,
+    updateUserFailure, updateUserStart, updateUserSuccess
 } from "../redux/user/userSlice"
 import { useUploadThing } from "../uploading"
 
@@ -284,7 +284,7 @@ export default function Profile() {
              <span  onClick={handleSignOut}   className="text-red-700 text-sm hover:underline cursor-pointer"  >Sign out</span>
           </div>    
 
-          <button    onClick={handleShowListings}  className="w-full text-green-700"  >Show listings</button>
+          <button    onClick={handleShowListings}    title="click to show listings"   className="w-full cursor-pointer  text-green-700"  >Show listings</button>
                        
                      {userListings?.length > 0  &&  
                     
