@@ -22,11 +22,11 @@ export default function Profile() {
   const [showDeleteInfo, setShowDeleteInfo]=useState(false)
   const navigate=useNavigate()
 
-  //userlisting states
+  //userlisting states 
 
   const [userListings, setUserListings]=useState([])
   const [userListError, setUserListError]=useState(false)
-
+  const [deleteListError, setDeleteListError]=useState("")
 
 
   const {startUpload, isUploading}=useUploadThing("imageUploader",{
@@ -221,9 +221,29 @@ export default function Profile() {
   clearMessage();
 
   
-        const handleShowListDelete=async(e)=>{
+        const handleShowListDelete=async(listingId)=>{
 
+           
 
+             try{
+            
+                const res=await fetch(`/api/listing/delete/${listingId}`,  {method:"DELETE"} )
+ 
+                const data=await res.json()
+
+                if (data.success === false){
+
+                     setDeleteListError(data.message);
+                     return;
+                }
+
+               setUserListings((prev)=> prev.filter(item=> item._id !== listingId)  )              
+
+             }catch(error){
+                 
+                  setDeleteListError("error deleting list")
+
+             }
 
         }
 
@@ -288,7 +308,7 @@ export default function Profile() {
 
                                             <div className="flex flex-col gap-1 items-center">
                                                   
-                                                  <button  onClick={handleShowListDelete}   className="text-sm  cursor-pointer   uppercase text-red-700"  >Delete</button>
+                                                  <button  onClick={()=>handleShowListDelete(listing._id)   }   className="text-sm  cursor-pointer   uppercase text-red-700"  >Delete</button>
                                                   <button  onClick={handleShowlistEdit}    className="hover:underline cursor-pointer  uppercase"  >Edit</button>
                                             </div>
                                       </div>
