@@ -5,11 +5,12 @@ import PrivateRoute from "./Components/PrivateRoute"
 import ProtectedHome from "./Components/ProtectedHome"
 import About from "./pages/About"
 import CreateListing from "./pages/CreateListing"
+import EditListing from "./pages/EditListing"
 import Home from "./pages/Home"
+import Listing from "./pages/Listing"
 import Profile from "./pages/Profile"
 import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
-
 
 
 export default function App() {
@@ -34,6 +35,8 @@ export default function App() {
                          <Route path="/create-listing" element={<CreateListing/>}  />
 
                   </Route>
+                  <Route  path="/edit-listing/:id" element={<EditListing/>}  />
+                  <Route  path="/listing/:id"  element={<Listing/>}  />
             </Routes>      
       
       </BrowserRouter>

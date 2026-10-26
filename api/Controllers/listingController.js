@@ -51,24 +51,10 @@ export const updateController=async (req,res,next)=>{
 
   try{
      
-     await ListingModel.findByIdAndUpdate(req.params.id, {$set:{
-           
-          name:req.body.name,
-          description:req.body.description,
-          address:req.body.address,
-          regularPrice:req.body.regularPrice,
-          discountPrice:req.body.discountPrice,
-          bathrooms:req.body.bathrooms,
-          bedrooms:req.body.bedrooms,
-          furnished:req.body.furnished,
-          parking:req.body.parking,
-          offer:req.body.offer,
-          imageUrls:req.body.imageUrls
-          
-     }}  )
+     const updatedList=await ListingModel.findByIdAndUpdate(req.params.id, {$set: req.body}  )
    
      console.log(parking);
-    return res.status(200).json({message:"Successfully update list"})
+    return res.status(200).json(updatedList)
 
   }catch(error){
 

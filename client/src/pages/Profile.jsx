@@ -247,11 +247,7 @@ export default function Profile() {
 
         }
 
-         const handleShowlistEdit=async(e)=>{
-
-
-
-         }
+    
      
   
 
@@ -301,7 +297,7 @@ export default function Profile() {
                                                     <img  src={listing.imageUrls[0]}  className="w-20 h-20 object-cover rounded-lg"   />
                                                 </Link>
                                                 <Link className="flex-1 truncate" to={`/listing/${listing._id}`} >
-                                                    <p>{listing.name}</p>
+                                                    <p  className="hover:underline" >{listing.name}</p>
                                                 </Link> 
                                             </div>
             
@@ -309,7 +305,8 @@ export default function Profile() {
                                             <div className="flex flex-col gap-1 items-center">
                                                   
                                                   <button  onClick={()=>handleShowListDelete(listing._id)   }   className="text-sm  cursor-pointer   uppercase text-red-700"  >Delete</button>
-                                                  <button  onClick={handleShowlistEdit}    className="hover:underline cursor-pointer  uppercase"  >Edit</button>
+                                                  
+                                                  <button   onClick={()=>navigate(`/edit-listing/${listing._id}`)  }  className="hover:underline cursor-pointer  uppercase"  >Edit</button>                                           
                                             </div>
                                       </div>
 
@@ -317,13 +314,14 @@ export default function Profile() {
                                     ) ) 
                                   
                                 }  
+                               
+         
                             
                           </div>
                    
                      }
          
-          {userListError && <p   className="text-red-700 mt-4 text-sm" >Error showing listing</p>} 
-
+               {userListError && <p   className="text-red-700 text-center mt-4 text-sm" >Error showing listing</p>} 
     </div>
   )
 }
