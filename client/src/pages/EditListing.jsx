@@ -221,7 +221,7 @@ function EditListing() {
 
         currentUserListing();
 
-    },[])
+    },[id])
 
 
   if (loadEditList){
