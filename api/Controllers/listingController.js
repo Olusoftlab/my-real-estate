@@ -64,3 +64,22 @@ export const updateController=async (req,res,next)=>{
 
 
 }
+
+
+export const getListingController=async (req,res,next)=>{
+
+    try {
+      
+         const listing=await ListingModel.findById(req.params.id)
+         
+         if(!listing)return next(errorHandler(404, "listing not found"))
+
+        return res.status(200).json(listing)    
+
+
+    } catch (error) {
+        
+        next(error)
+    } 
+
+}
