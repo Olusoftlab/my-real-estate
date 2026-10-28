@@ -53,7 +53,6 @@ export const updateController=async (req,res,next)=>{
      
      const updatedList=await ListingModel.findByIdAndUpdate(req.params.id, {$set: req.body}  )
    
-     console.log(parking);
     return res.status(200).json(updatedList)
 
   }catch(error){
