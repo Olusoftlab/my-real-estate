@@ -39,19 +39,19 @@ function EditListing() {
              
            const getUserListing=data.find(item=> item._id === id )       
    
-          setFormData({...formData, name:getUserListing.name,
-                           description:getUserListing.description,
-                           address:getUserListing.address,
-                           sale:getUserListing.sale,
-                           rent:getUserListing.rent,
-                           parking:getUserListing.parking? true :false,
-                           furnished:getUserListing.furnished,
-                           offer:getUserListing.offer,
-                           bathrooms:getUserListing.bathrooms,
-                           bedrooms:getUserListing.bedrooms,
-                           regularPrice:getUserListing.regularPrice,
-                           discountPrice:getUserListing.discountPrice,
-                           imageUrls:getUserListing.imageUrls 
+          setFormData({...formData, name:getUserListing?.name,
+                           description:getUserListing?.description,
+                           address:getUserListing?.address,
+                           sale:getUserListing?.sale,
+                           rent:getUserListing?.rent,
+                           parking:getUserListing?.parking? true :false,
+                           furnished:getUserListing?.furnished,
+                           offer:getUserListing?.offer,
+                           bathrooms:getUserListing?.bathrooms,
+                           bedrooms:getUserListing?.bedrooms,
+                           regularPrice:getUserListing?.regularPrice,
+                           discountPrice:getUserListing?.discountPrice,
+                           imageUrls:getUserListing?.imageUrls 
            })
              
                 
@@ -106,17 +106,17 @@ function EditListing() {
 
       const handleSubmitImage= async ()=>{
             
-          if (files.length >0 && files.length < 7){
+          if (files?.length >0 && files?.length < 7){
 
                  const resImage=[]
 
-              for (let i=0; i < files.length; i++){
+              for (let i=0; i < files?.length; i++){
 
                     resImage.push(await callUploadedImage(files[i]));
 
               }
            
-               setFormData({...formData, imageUrls:formData.imageUrls.concat(resImage)})
+               setFormData({...formData, imageUrls:formData.imageUrls?.concat(resImage)})
                setErrorUpload(false);
                setFileNumberError(false) 
           }else{
@@ -336,7 +336,7 @@ if(loadEditListError){
 
                     {
                       
-                       formData.imageUrls.length > 0 && formData.imageUrls.map((url)=>(
+                       formData.imageUrls?.length > 0 && formData.imageUrls?.map((url)=>(
                           
                            <div  className="flex items-center justify-between p-2" key={formData.imageUrls.indexOf(url)} >
 
