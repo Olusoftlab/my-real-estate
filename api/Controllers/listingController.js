@@ -82,3 +82,64 @@ export const getListingController=async (req,res,next)=>{
     } 
 
 }
+
+export const getAllListing=async (req,res, next)=>{
+
+   try{
+
+       const limit=parseInt(req.query.limit) || 9
+       const startIndex=parseInt(req.query.startIndex) || 0
+
+    let filter={}
+
+       let offer=req.query.offer
+
+       if (offer === "true")filter.offer=true 
+
+
+
+       let furnished=req.query.furnished
+
+       if (furnished === "true")filter.furnished=true
+
+      let parking=req.query.parking
+
+      if (parking === "true")filter.parking=true
+
+
+     let rent=req.query.rent
+
+     if (rent === "true")filter.rent=true
+
+ 
+    let sale=req.query.sale
+    
+    if (sale === "true")filter.sale=true 
+ 
+
+   const searchTerm=req.query.searchTerm || ""
+
+   const sort=req.query.sort || "createdAt"
+
+   const order=req.query.order || "desc"
+
+  
+   if (searchTerm){
+      filter.name={$regex:searchTerm, $options:"i"}
+   }
+
+   const listings=await ListingModel.find(filter).sort({[sort]: order}).limit(limit).skip(startIndex)
+
+
+  return res.status(200).json(listings)
+
+
+
+   }catch(error){
+  
+      next(error)
+
+   }
+
+
+}

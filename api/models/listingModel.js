@@ -46,30 +46,30 @@ const listingSchema=new mongoose.Schema({
 
    furnished:{
        type:Boolean,
-    
+       default:false
    }
 ,
    
    parking:{
       
-        type:Boolean
-
-   }
+        type:Boolean,
+        default:false
+   } 
  ,
 
    sale:{
       type:Boolean,
-    
+      default:false
    }
 ,
   rent:{
       type:Boolean,
-      
+      default:false
   } 
  ,  
    offer:{
        type:Boolean,
-       
+       default:false       
    }
  ,
 
