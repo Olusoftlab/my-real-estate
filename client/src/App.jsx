@@ -9,9 +9,9 @@ import EditListing from "./pages/EditListing"
 import Home from "./pages/Home"
 import Listing from "./pages/Listing"
 import Profile from "./pages/Profile"
+import Search from "./pages/Search"
 import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
-
 
 export default function App() {
   return (
@@ -37,7 +37,7 @@ export default function App() {
                   </Route>
                   <Route  path="/edit-listing/:id" element={<EditListing/>}  />
                   <Route  path="/listing/:id"  element={<Listing/>}  />
-                
+                  <Route  path="/search"   element={<Search/>}  />
             </Routes>      
       
       </BrowserRouter>
