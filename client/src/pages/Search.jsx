@@ -1,5 +1,47 @@
+import { useEffect, useState } from "react"
+import { FaMapMarkerAlt } from "react-icons/fa"
+import { Link, useSearchParams } from "react-router-dom"
+
 
 function Search() {
+    
+   const [listTray, setListTray]=useState([]) 
+   const [isError, setIsError]=useState(false)
+
+    const[searchParams]=useSearchParams()
+   
+    const getSearchQuery=searchParams.get("searchTerm")
+
+    useEffect(()=>{
+
+       const filteredList=async()=>{
+
+            try {
+                
+                  const fetchList=await fetch(`/api/listing/get?searchTerm=${getSearchQuery}`)
+                  const data=await fetchList.json()
+                  
+                  if (data.success === false){
+                       
+                       setIsError(true)
+                       return;
+                  }
+                 
+               setListTray(data)   
+
+            } catch (error) {
+              
+                console.log(error.message) 
+
+            } 
+
+       }
+ 
+      filteredList()
+
+    },[getSearchQuery])
+
+
   return (
         
         <main>
@@ -67,6 +109,41 @@ function Search() {
                   <div className="flex-3 p-5" >
                       
                        <h1  className="font-semi-bold text-4xl"  >Listing result....</h1>
+                       <div className="flex gap-4 flex-wrap" >
+
+                             {
+                                 
+                                 listTray.length > 0 ? listTray.map(listItem=>(
+                                    
+                                     <div key={listItem.createdAt} >
+                                            <Link  to={`/listing/${listItem._id}`}>
+                                                    
+                                                    <img  src={listItem.imageUrls}  className="w-80 h-50 object-cover "   />
+                                                    <div className=" bg-white p-2">                                         
+                                                            <p>{listItem.name}</p>
+                                                            <div className="flex flex-col w-full max-w-70  gap-2">
+                                                                    <div className="flex items-center gap-2">
+
+                                                                        <FaMapMarkerAlt   className="text-green-700" />
+                                                                        <p>{listItem.address}</p>
+                                                                
+                                                                    </div>
+                                                               
+                                                                     <p className="wrap-break-word" >{listItem.description.slice(0,60) + "...."}</p>                   
+                                                            </div>
+                                            
+                                                    </div>
+                        
+                                            </Link>
+                                      
+                                     </div>
+                     
+
+                                 )   ) : null
+
+                             }
+
+                       </div>
 
                   </div>
 
